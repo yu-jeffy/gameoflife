@@ -1,23 +1,40 @@
-import logo from './logo.svg';
+import React, { useState } from 'react';
+import Grid from './Grid';
 import './App.css';
 
 function App() {
+  // State to control the simulation status
+  const [isRunning, setIsRunning] = useState(false);
+
+  // Handler for the 'Start' button
+  const startGame = () => {
+    setIsRunning(true);
+    // Additional logic to start the simulation will go here
+  };
+
+  // Handler for the 'Stop' button
+  const stopGame = () => {
+    setIsRunning(false);
+    // Additional logic to stop the simulation will go here
+  };
+
+  const [resetFlag, setResetFlag] = useState(false);
+
+  // Handler for the 'Reset' button
+  const resetGame = () => {
+    setIsRunning(false);
+    setResetFlag(prev => !prev); // Toggle the reset flag to trigger a grid reset
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>Game of Life</h1>
+      <Grid isRunning={isRunning} resetFlag={resetFlag} />
+      <div>
+        <button onClick={startGame} disabled={isRunning}>Start</button>
+        <button onClick={stopGame} disabled={!isRunning}>Stop</button>
+        <button onClick={resetGame}>Reset</button>
+      </div>
     </div>
   );
 }
